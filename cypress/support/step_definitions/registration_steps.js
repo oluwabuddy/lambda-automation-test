@@ -22,7 +22,7 @@ And('I click {string} from the pop-up displayed', (action) => {
 });
 
 And('I fill in necessary details for registration', () => {
-  RegistrationPage.fillRegistrationForm('your_username', 'your_password');
+  RegistrationPage.fillRegistrationForm('John', 'Doe', 'john.doe@example.com', '123456789', 'SecretPassword');
 });
 
 And('I complete the registration', () => {
