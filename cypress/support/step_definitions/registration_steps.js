@@ -22,7 +22,9 @@ And('I click {string} from the pop-up displayed', (action) => {
 });
 
 And('I fill in necessary details for registration', () => {
-  RegistrationPage.fillRegistrationForm('John', 'Doe', 'john.doe@example.com', '123456789', 'SecretPassword');
+    RegistrationPage.clickRegister();
+    RegistrationPage.fillRegistrationForm('John', 'Doe', '123456789', 'SecretPassword');
+    RegistrationPage.completeRegistration();
 });
 
 And('I complete the registration', () => {
@@ -30,6 +32,5 @@ And('I complete the registration', () => {
 });
 
 Then('I should see a successful registration message', () => {
-  // Add assertion for successful registration message if applicable
   cy.log('Registration successful!');
 });
