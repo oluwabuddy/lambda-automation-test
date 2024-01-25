@@ -1,12 +1,17 @@
 class RegistrationPage {
     clickRegister() {
-      cy.contains('Register').click();
+      cy.contains('Register').click({force: true});
     }
-  
-    fillRegistrationForm(username, password) {
-      cy.get('#username').type(username);
-      cy.get('#password').type(password);
-      cy.get('#confirmPassword').type(password);
+    
+    fillRegistrationForm(username,lastname, email,telephone, password,  ) {
+      cy.get('#input-firstname').type(username);
+      cy.get('#input-lastname').type(lastname);
+      cy.get('#input-email').type(email);
+      cy.get('#input-telephone').type(telephone);
+      cy.get('#input-password').type(password);
+      cy.get('#input-confirm').type(password);
+      cy.get('.custom-control-label').click();
+
     }
   
     completeRegistration() {
