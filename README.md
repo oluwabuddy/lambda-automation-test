@@ -25,6 +25,7 @@ To get started, follow these steps:
 Clone this repository.
 
 Navigate to the project directory in your terminal.
+
 Run `npm install` to install the project dependencies.
 
 ## Usage
