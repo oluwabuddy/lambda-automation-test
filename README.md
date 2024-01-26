@@ -50,4 +50,4 @@ Test scripts can be found in the `cypress/e2e/api-test` directory, specifically 
 The project utilizes the `cypress-mochawesome-reporter` for generating detailed test reports. Reports are generated in the `mochawesome-report directory`.
 
 ## License
-This project is licensed under the [ISC License](https://www.google.com)
+This project is licensed under the [ISC License](https://github.com/oluwabuddy/lamba-automation-test/blob/main/LICENSE)
