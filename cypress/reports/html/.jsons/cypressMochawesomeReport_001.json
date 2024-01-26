@@ -1,0 +1,169 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 4,
+    "passes": 3,
+    "pending": 0,
+    "failures": 1,
+    "start": "2024-01-25T19:06:05.588Z",
+    "end": "2024-01-25T19:06:07.759Z",
+    "duration": 2171,
+    "testsRegistered": 4,
+    "passPercent": 75,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "da5f6508-7f1c-48da-9dde-d5541cf2c828",
+      "title": "",
+      "fullFile": "cypress/e2e/api_tests_spec.js",
+      "file": "cypress/e2e/api_tests_spec.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "963e18a5-0d3d-4be5-a14c-81f9c0aecb37",
+          "title": "API Automation Tests",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Create an Auth Token",
+              "fullTitle": "API Automation Tests Create an Auth Token",
+              "timedOut": null,
+              "duration": 1084,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  method: 'POST',\n  url: 'https://restful-booker.herokuapp.com/auth',\n  body: {\n    username: 'admin',\n    password: 'password123'\n  }\n}).then(function (response) {\n  expect(response.status).to.equal(200);\n  expect(response.body).to.have.property('token');\n  authToken = response.body.token;\n});",
+              "err": {},
+              "uuid": "8f23d28e-0750-4acc-b5cd-958a4bd52103",
+              "parentUUID": "963e18a5-0d3d-4be5-a14c-81f9c0aecb37",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Get all Booking IDs",
+              "fullTitle": "API Automation Tests Get all Booking IDs",
+              "timedOut": null,
+              "duration": 405,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  method: 'GET',\n  url: 'https://restful-booker.herokuapp.com/booking',\n  headers: {\n    Authorization: \"Bearer \".concat(authToken)\n  }\n}).then(function (response) {\n  expect(response.status).to.equal(200);\n  expect(response.body).to.be.an('array');\n  if (response.body.length > 0) {\n    bookingId = response.body[0].bookingid;\n  }\n});",
+              "err": {},
+              "uuid": "e2c659ff-2ca5-4596-9bfd-bb29c51e8bac",
+              "parentUUID": "963e18a5-0d3d-4be5-a14c-81f9c0aecb37",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Create a Booking",
+              "fullTitle": "API Automation Tests Create a Booking",
+              "timedOut": null,
+              "duration": 199,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "var bookingData = {\n  firstname: 'John',\n  lastname: 'Doe',\n  totalprice: 200,\n  depositpaid: true,\n  bookingdates: {\n    checkin: '2022-05-01',\n    checkout: '2022-05-05'\n  },\n  additionalneeds: 'Breakfast'\n};\ncy.request({\n  method: 'POST',\n  url: 'https://restful-booker.herokuapp.com/booking',\n  headers: {\n    Authorization: \"Bearer \".concat(authToken)\n  },\n  body: bookingData\n}).then(function (response) {\n  expect(response.status).to.equal(200);\n  expect(response.body).to.have.property('bookingid');\n  bookingId = response.body.bookingid;\n});",
+              "err": {},
+              "uuid": "8f27e475-4616-4a0d-8c73-208df39b3961",
+              "parentUUID": "963e18a5-0d3d-4be5-a14c-81f9c0aecb37",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Update a Booking",
+              "fullTitle": "API Automation Tests Update a Booking",
+              "timedOut": null,
+              "duration": 393,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "var updatedBookingData = {\n  firstname: 'UpdatedJohn',\n  lastname: 'UpdatedDoe'\n};\ncy.request({\n  method: 'PUT',\n  url: \"https://restful-booker.herokuapp.com/booking/\".concat(bookingId),\n  headers: {\n    Authorization: \"Bearer \".concat(authToken)\n  },\n  body: updatedBookingData\n}).then(function (response) {\n  expect(response.status).to.equal(200);\n  expect(response.body.firstname).to.equal('UpdatedJohn');\n  expect(response.body.lastname).to.equal('UpdatedDoe');\n});",
+              "err": {
+                "message": "CypressError: `cy.request()` failed on:\n\nhttps://restful-booker.herokuapp.com/booking/1585\n\nThe response we received from your web server was:\n\n  > 403: Forbidden\n\nThis was considered a failure because the status code was not `2xx` or `3xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: PUT\nURL: https://restful-booker.herokuapp.com/booking/1585\nHeaders: {\n  \"Connection\": \"keep-alive\",\n  \"Authorization\": \"Bearer a24c5ed5efb9d3e\",\n  \"user-agent\": \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Cypress/13.6.3 Chrome/114.0.5735.289 Electron/25.8.4 Safari/537.36\",\n  \"accept\": \"*/*\",\n  \"accept-encoding\": \"gzip, deflate\",\n  \"content-type\": \"application/json\",\n  \"content-length\": 51\n}\nBody: {\"firstname\":\"UpdatedJohn\",\"lastname\":\"UpdatedDoe\"}\n\n-----------------------------------------------------------\n\nThe response we got was:\n\nStatus: 403 - Forbidden\nHeaders: {\n  \"server\": \"Cowboy\",\n  \"report-to\": \"{\\\"group\\\":\\\"heroku-nel\\\",\\\"max_age\\\":3600,\\\"endpoints\\\":[{\\\"url\\\":\\\"https://nel.heroku.com/reports?ts=1706209567&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=m99bhpciSXOkEli76GZI%2BZehbx%2FBpMl5Qaw6LgRb1iw%3D\\\"}]}\",\n  \"reporting-endpoints\": \"heroku-nel=https://nel.heroku.com/reports?ts=1706209567&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=m99bhpciSXOkEli76GZI%2BZehbx%2FBpMl5Qaw6LgRb1iw%3D\",\n  \"nel\": \"{\\\"report_to\\\":\\\"heroku-nel\\\",\\\"max_age\\\":3600,\\\"success_fraction\\\":0.005,\\\"failure_fraction\\\":0.05,\\\"response_headers\\\":[\\\"Via\\\"]}\",\n  \"connection\": \"keep-alive\",\n  \"x-powered-by\": \"Express\",\n  \"content-type\": \"text/plain; charset=utf-8\",\n  \"content-length\": \"9\",\n  \"etag\": \"W/\\\"9-PatfYBLj4Um1qTm5zrukoLhNyPU\\\"\",\n  \"date\": \"Thu, 25 Jan 2024 19:06:07 GMT\",\n  \"via\": \"1.1 vegur\"\n}\nBody: Forbidden\n\n\nhttps://on.cypress.io/request",
+                "estack": "CypressError: `cy.request()` failed on:\n\nhttps://restful-booker.herokuapp.com/booking/1585\n\nThe response we received from your web server was:\n\n  > 403: Forbidden\n\nThis was considered a failure because the status code was not `2xx` or `3xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: PUT\nURL: https://restful-booker.herokuapp.com/booking/1585\nHeaders: {\n  \"Connection\": \"keep-alive\",\n  \"Authorization\": \"Bearer a24c5ed5efb9d3e\",\n  \"user-agent\": \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Cypress/13.6.3 Chrome/114.0.5735.289 Electron/25.8.4 Safari/537.36\",\n  \"accept\": \"*/*\",\n  \"accept-encoding\": \"gzip, deflate\",\n  \"content-type\": \"application/json\",\n  \"content-length\": 51\n}\nBody: {\"firstname\":\"UpdatedJohn\",\"lastname\":\"UpdatedDoe\"}\n\n-----------------------------------------------------------\n\nThe response we got was:\n\nStatus: 403 - Forbidden\nHeaders: {\n  \"server\": \"Cowboy\",\n  \"report-to\": \"{\\\"group\\\":\\\"heroku-nel\\\",\\\"max_age\\\":3600,\\\"endpoints\\\":[{\\\"url\\\":\\\"https://nel.heroku.com/reports?ts=1706209567&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=m99bhpciSXOkEli76GZI%2BZehbx%2FBpMl5Qaw6LgRb1iw%3D\\\"}]}\",\n  \"reporting-endpoints\": \"heroku-nel=https://nel.heroku.com/reports?ts=1706209567&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=m99bhpciSXOkEli76GZI%2BZehbx%2FBpMl5Qaw6LgRb1iw%3D\",\n  \"nel\": \"{\\\"report_to\\\":\\\"heroku-nel\\\",\\\"max_age\\\":3600,\\\"success_fraction\\\":0.005,\\\"failure_fraction\\\":0.05,\\\"response_headers\\\":[\\\"Via\\\"]}\",\n  \"connection\": \"keep-alive\",\n  \"x-powered-by\": \"Express\",\n  \"content-type\": \"text/plain; charset=utf-8\",\n  \"content-length\": \"9\",\n  \"etag\": \"W/\\\"9-PatfYBLj4Um1qTm5zrukoLhNyPU\\\"\",\n  \"date\": \"Thu, 25 Jan 2024 19:06:07 GMT\",\n  \"via\": \"1.1 vegur\"\n}\nBody: Forbidden\n\n\nhttps://on.cypress.io/request\n    at <unknown> (https://ecommerce-playground.lambdatest.io/__cypress/runner/cypress_runner.js:133030:72)\n    at tryCatcher (https://ecommerce-playground.lambdatest.io/__cypress/runner/cypress_runner.js:1807:23)\n    at Promise._settlePromiseFromHandler (https://ecommerce-playground.lambdatest.io/__cypress/runner/cypress_runner.js:1519:31)\n    at Promise._settlePromise (https://ecommerce-playground.lambdatest.io/__cypress/runner/cypress_runner.js:1576:18)\n    at Promise._settlePromise0 (https://ecommerce-playground.lambdatest.io/__cypress/runner/cypress_runner.js:1621:10)\n    at Promise._settlePromises (https://ecommerce-playground.lambdatest.io/__cypress/runner/cypress_runner.js:1701:18)\n    at _drainQueueStep (https://ecommerce-playground.lambdatest.io/__cypress/runner/cypress_runner.js:2407:12)\n    at _drainQueue (https://ecommerce-playground.lambdatest.io/__cypress/runner/cypress_runner.js:2400:9)\n    at Async._drainQueues (https://ecommerce-playground.lambdatest.io/__cypress/runner/cypress_runner.js:2416:5)\n    at Async.drainQueues (https://ecommerce-playground.lambdatest.io/__cypress/runner/cypress_runner.js:2286:14)\nFrom Your Spec Code:\n    at Context.eval (cypress/e2e/api_tests_spec.js:70:9)",
+                "diff": null
+              },
+              "uuid": "1dc56f1f-c693-46d7-b6b4-fab181d253bf",
+              "parentUUID": "963e18a5-0d3d-4be5-a14c-81f9c0aecb37",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "8f23d28e-0750-4acc-b5cd-958a4bd52103",
+            "e2c659ff-2ca5-4596-9bfd-bb29c51e8bac",
+            "8f27e475-4616-4a0d-8c73-208df39b3961"
+          ],
+          "failures": [
+            "1dc56f1f-c693-46d7-b6b4-fab181d253bf"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 2081,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "cypressMochawesomeReport",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportFilename": "cypressMochawesomeReport",
+        "videoOnFailOnly": "true",
+        "overwrite": false,
+        "html": false,
+        "json": true,
+        "reportDir": "cypress/reports/html/.jsons"
+      },
+      "version": "6.2.0"
+    }
+  }
+}
