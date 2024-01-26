@@ -1,0 +1,164 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 4,
+    "passes": 4,
+    "pending": 0,
+    "failures": 0,
+    "start": "2024-01-26T10:00:58.483Z",
+    "end": "2024-01-26T10:01:00.426Z",
+    "duration": 1943,
+    "testsRegistered": 4,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "4cda2a2e-964d-4569-afe3-6520e1838b5d",
+      "title": "",
+      "fullFile": "cypress/e2e/api-test/api_tests_spec.js",
+      "file": "cypress/e2e/api-test/api_tests_spec.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "2ab90234-6bad-4e00-b028-6f0b214fb6ee",
+          "title": "API Automation Tests",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Create an Auth Token",
+              "fullTitle": "API Automation Tests Create an Auth Token",
+              "timedOut": null,
+              "duration": 1062,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  method: 'POST',\n  url: 'https://restful-booker.herokuapp.com/auth',\n  body: {\n    username: 'admin',\n    password: 'password123'\n  }\n}).then(function (response) {\n  expect(response.status).to.equal(200);\n  expect(response.body).to.have.property('token');\n  authToken = response.body.token;\n});",
+              "err": {},
+              "uuid": "ba6a063e-8766-4ff0-a256-23a95c28f69c",
+              "parentUUID": "2ab90234-6bad-4e00-b028-6f0b214fb6ee",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Get all Booking IDs",
+              "fullTitle": "API Automation Tests Get all Booking IDs",
+              "timedOut": null,
+              "duration": 428,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  method: 'GET',\n  url: 'https://restful-booker.herokuapp.com/booking',\n  headers: {\n    Authorization: \"Bearer \".concat(authToken)\n  }\n}).then(function (response) {\n  expect(response.status).to.equal(200);\n  expect(response.body).to.be.an('array');\n  if (response.body.length > 0) {\n    bookingId = response.body[0].bookingid;\n  }\n});",
+              "err": {},
+              "uuid": "90f63cf7-1539-4f7d-9d69-8b8e5d99621b",
+              "parentUUID": "2ab90234-6bad-4e00-b028-6f0b214fb6ee",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Create a Booking",
+              "fullTitle": "API Automation Tests Create a Booking",
+              "timedOut": null,
+              "duration": 197,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "var bookingData = {\n  firstname: 'John',\n  lastname: 'Doe',\n  totalprice: 200,\n  depositpaid: true,\n  bookingdates: {\n    checkin: '2022-05-01',\n    checkout: '2022-05-05'\n  },\n  additionalneeds: 'Breakfast'\n};\ncy.request({\n  method: 'POST',\n  url: 'https://restful-booker.herokuapp.com/booking',\n  headers: {\n    Authorization: \"Bearer \".concat(authToken)\n  },\n  body: bookingData\n}).then(function (response) {\n  expect(response.status).to.equal(200);\n  expect(response.body).to.have.property('bookingid');\n  bookingId = response.body.bookingid;\n});",
+              "err": {},
+              "uuid": "dde8d18b-66c6-4868-90e9-e4744cc0605e",
+              "parentUUID": "2ab90234-6bad-4e00-b028-6f0b214fb6ee",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Update a Booking",
+              "fullTitle": "API Automation Tests Update a Booking",
+              "timedOut": null,
+              "duration": 199,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "var updatedBookingData = {\n  firstname: 'UpdatedJohn',\n  lastname: 'UpdatedDoe',\n  \"totalprice\": 111,\n  \"depositpaid\": true,\n  \"bookingdates\": {\n    \"checkin\": \"2018-01-01\",\n    \"checkout\": \"2019-01-01\"\n  },\n  \"additionalneeds\": \"Breakfast\"\n};\ncy.request({\n  method: 'PUT',\n  url: \"https://restful-booker.herokuapp.com/booking/\".concat(bookingId),\n  headers: {\n    'Content-Type': 'application/json',\n    'Accept': 'application/json',\n    'Cookie': \"token=\".concat(authToken)\n  },\n  body: updatedBookingData\n}).then(function (response) {\n  expect(response.status).to.equal(200);\n  expect(response.body.firstname).to.equal('UpdatedJohn');\n  expect(response.body.lastname).to.equal('UpdatedDoe');\n});",
+              "err": {},
+              "uuid": "6ed4f4ba-9ce6-40b5-8a1e-54da1ae31dcd",
+              "parentUUID": "2ab90234-6bad-4e00-b028-6f0b214fb6ee",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "ba6a063e-8766-4ff0-a256-23a95c28f69c",
+            "90f63cf7-1539-4f7d-9d69-8b8e5d99621b",
+            "dde8d18b-66c6-4868-90e9-e4744cc0605e",
+            "6ed4f4ba-9ce6-40b5-8a1e-54da1ae31dcd"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 1886,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "cypressMochawesomeReport",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportFilename": "cypressMochawesomeReport",
+        "videoOnFailOnly": "true",
+        "overwrite": false,
+        "html": false,
+        "json": true,
+        "reportDir": "cypress/reports/html/.jsons"
+      },
+      "version": "6.2.0"
+    }
+  }
+}
